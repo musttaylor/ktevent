@@ -2,6 +2,13 @@
 <template>
   <div class="ktEvent">
     <body bgcolor="white" margin="0">
+      <!--button id="show-modal" @click="showModal = true">Show Modal</button-->
+      <!-- use the modal component, pass in the prop -->
+      <modal :show="showModal">
+        <template #header>
+          <h3>custom header</h3>
+        </template>
+      </modal>
       <ul>
         <li>
           <img id="logo" src="../assets/kt_logo.png">
@@ -91,6 +98,7 @@
 
 <script>
 import axios from 'axios'
+import Modal from './Modal.vue'
 const baseURI = 'https://api.ktddoddostore.com/events'
 const gameURI = ''
 var resultJson
@@ -112,6 +120,9 @@ var items = [ {
 }]
 export default {
   name: 'game',
+  components: {
+    Modal
+  },
   data () {
     return {
       items,
@@ -129,7 +140,8 @@ export default {
       btnPlayImage,
       prizeDescWidth,
       prizeImgMargin,
-      btnPlayTop
+      btnPlayTop,
+      showModal: false
     }
   },
   methods: {
@@ -205,8 +217,8 @@ export default {
       //  Set Game full URI
       const baseGameURI = 'http://ktddoddostore.com'
       this.gameURI = `${baseGameURI}/${this.gameName}.html?id=${this.storeIdx}`
-      console.log('parsed gameName = ' + this.gameName)
-      console.log('parsed gameURI = ' + this.gameURI)
+      //  console.log('parsed gameName = ' + this.gameName)
+      //  console.log('parsed gameURI = ' + this.gameURI)
     },
     getStoreID () {
       console.log('Cur URL is ' + currentUrl)
@@ -236,11 +248,54 @@ export default {
           this.setGameImage()
         })
     },
+    showExpiredPopup (toDateArr) {
+      console.log('toDate = ' + toDateArr)
+      //  Get To Date
+      const arrToDate = toDateArr.split('-')
+      const toYear = arrToDate[0]
+      const toMonth = parseInt((arrToDate[1])).toString()
+      const toDay = arrToDate[2]
+      console.log('arrResultToDate = ' + toYear)
+      console.log('arrResultToDate = ' + toMonth)
+      console.log('arrResultToDate = ' + toDay)
+      //  Get Cur Date
+      const curDate = new Date()
+      const curYear = curDate.getFullYear()
+      const curMonth = curDate.getMonth() + 1
+      const curDay = curDate.getDate()
+      console.log('Date - year = ' + curYear)
+      console.log('Date - month = ' + curMonth)
+      console.log('Date - day = ' + curDay)
+      //  Check Year
+      if (toYear > curYear) {
+        this.showModal = false
+        return
+      } else if (toYear < curYear) {
+        this.showModal = true
+        return
+      }
+      //  Check Month
+      if (toMonth > curMonth) {
+        this.showModal = false
+        return
+      } else if (toMonth < curMonth) {
+        this.showModal = true
+        return
+      }
+      //  Check Day
+      if (toDay < curDay) {
+        this.showModal = true
+      } else {
+        this.showModal = false
+      }
+    },
     setData () {
       //  Set Game Title
       document.getElementById('titleEvent').innerHTML = resultJson['title']
       //  Set Event Period
       document.getElementById('eventPeriod-date').innerHTML = resultJson['fromDate'] + ' ~ ' + resultJson['toDate']
+      //  Set Show Popup
+      this.showExpiredPopup(resultJson['toDate'])
       //  Set prize array
       var prizeArr = resultJson['prize']
       for (let i = 0; i < items.length; i++) {
