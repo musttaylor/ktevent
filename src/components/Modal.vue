@@ -52,7 +52,7 @@ export default {
 
 .modal-body {
   width: 85%;
-  height: 26px;
+  height: auto;
   position: absolute;
   top: 50%;
   left: 50%;
