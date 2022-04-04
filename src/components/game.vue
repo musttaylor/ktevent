@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <template>
   <div class="ktEvent">
-    <body bgcolor="white" margin="0">
+    <body margin="0">
       <!--button id="show-modal" @click="showModal = true">Show Modal</button-->
       <!-- use the modal component, pass in the prop -->
       <modal :show="showModal">
@@ -37,7 +37,7 @@
         </div>
       </div-->
     </body>
-    <body bgcolor="white">
+    <body>
       <div class="container-game">
         <img class="device-img" v-bind:src="deviceImage">
         <img class="game-img" v-bind:width="imgWidth" v-bind:src="gameImage">
@@ -579,6 +579,7 @@ ul {
 }
 
 #logo {
+  margin: 30px;
   width: 25px;
   height: 20.4px;
   flex-grow: 0;

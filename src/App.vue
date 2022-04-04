@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <template>
-  <div id="app">
+  <div bgcolor="white" id="app">
     <router-view/>
   </div>
 </template>
@@ -13,11 +13,13 @@ export default {
 
 <style>
 #app {
+  color-scheme: only light;
+  background-color: white;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin: 30px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   padding: 0px;
 }
 
