@@ -208,6 +208,11 @@ export default {
           this.gameImage = require('../assets/img_game_lottery.png')
           this.gameName = 'mgkt_speedo'
           break
+        case 4:
+          //  해적
+          this.gameImage = require('../assets/img_game_pirate.png')
+          this.gameName = 'mgkt_pirate'
+          break
         default:
           this.gameImage = require('../assets/img_game_ladder.png')
           this.gameName = 'mgkt_ladder'
@@ -266,6 +271,7 @@ export default {
       console.log('Date - year = ' + curYear)
       console.log('Date - month = ' + curMonth)
       console.log('Date - day = ' + curDay)
+
       //  Check Year
       if (toYear > curYear) {
         this.showModal = false
